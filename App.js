@@ -1,11 +1,12 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import LoginScreen from './Screens/loginScreen';
+import AppNavigator from './routes/AppContainer';
+
 
 export default function App() {
   return (
     <View>
-     <LoginScreen/>
+      <AppNavigator/>
     </View>
     
   );

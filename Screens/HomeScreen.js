@@ -80,7 +80,7 @@ const styles = StyleSheet.create({
 })
 
 // the login screen
-class LoginScreen extends React.Component {
+class HomeScreen extends React.Component {
   render() {
     return (
       <View>
@@ -117,4 +117,4 @@ class LoginScreen extends React.Component {
     );
   }
 }
-export default LoginScreen;
+export default HomeScreen;
