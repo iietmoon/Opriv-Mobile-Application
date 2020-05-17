@@ -1,9 +1,9 @@
 // import
-import React from 'react'
-import { View, StyleSheet, Image, Text } from 'react-native'
+import React, {Component} from 'react'
+import { View, StyleSheet, Image, Text, TouchableHighlight } from 'react-native'
 import { LinearGradient } from 'expo-linear-gradient';
 import { Input, Button, SocialIcon } from 'react-native-elements';
-import Icon from 'react-native-vector-icons/FontAwesome';
+import { withNavigation } from 'react-navigation';
 // import the images
 import logo from '../assets/logo.png';
 import fbLogo from '../assets/fb-logo.png';
@@ -80,8 +80,7 @@ const styles = StyleSheet.create({
 })
 
 // the login screen
-class LoginScreen extends React.Component {
-  render() {
+function LoginScreen({navigation}) {
     return (
       <View>
       <LinearGradient colors={['#7fceee', '#406a79']} style={{height: 1000}}>
@@ -100,21 +99,25 @@ class LoginScreen extends React.Component {
           <View style={styles.BoxTitle} >
               <Text style={styles.forgot} >Forgot Password?</Text>
           </View>
+
+          {/*Login button*/}
           <View style={styles.boxBtn} >
-            <Button title="Sign in" buttonStyle={styles.Btn} />
+            <Button title="Sign in" buttonStyle={styles.Btn} onPress={() => navigation.navigate('Home') } />
           </View> 
         </View>
         <View style={styles.socialView} >
           <Image source={fbLogo} style={styles.socialIcon} />
           <Image source={twLogo} style={styles.socialIcon} /> 
         </View>
-        <View style={styles.upBox} >
-            <Button title="Sign up" buttonStyle={styles.upBtn} />
-        </View> 
 
+        {/*Signup button*/}
+        <View style={styles.upBox} >
+           <Button title="Sign up" buttonStyle={styles.upBtn}/>
+        </View> 
+        
       </LinearGradient>
     </View>
     );
   }
-}
-export default LoginScreen;
+
+export default withNavigation(LoginScreen);
