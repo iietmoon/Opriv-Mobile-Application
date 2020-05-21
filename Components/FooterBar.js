@@ -6,8 +6,8 @@ import Home from '../assets/Home.png'
 import account from '../assets/account.png'
 import chat from '../assets/chat.png'
 // navigation
-import {withNavigation} from 'react-navigation'
-
+import { withNavigation } from 'react-navigation'
+import { TouchableHighlight, TouchableOpacity } from 'react-native-gesture-handler'
 
 // stylesheet
 const styles = StyleSheet.create({
@@ -30,8 +30,8 @@ const styles = StyleSheet.create({
     alignItems: 'center'
   },
   footerIcons: {
-    width: 20,
-    height: 20
+    width: 25,
+    height: 25
   },
   footerText: {
     fontSize: 13,
@@ -45,57 +45,58 @@ const styles = StyleSheet.create({
     color: '#5c95ac',
     textTransform: 'uppercase'
   },
-  footerCircle:{
-   backgroundColor: '#fff',
-   width: 85,
-   height: 85,
-   borderRadius: 85/2,
-   justifyContent: 'center',
-   alignItems: "center",
-   shadowColor: "#000",
-   shadowOffset: {
-    	width: 0,
-    	height: 12,
-   },
-   shadowOpacity: 0.58,
-   shadowRadius: 16.00,
-   elevation: 24,
+  footerCircle: {
+    backgroundColor: '#fff',
+    width: 85,
+    height: 85,
+    borderRadius: 85 / 2,
+    justifyContent: 'center',
+    alignItems: 'center',
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
+    marginHorizontal: 5
   }
 
 })
 
-
 // The main screen
- function FooterBar() {
-    return (
-      <View style={styles.footer}>
-        <View style={styles.footerContent}>
-          {/* Items 1 */}
+function FooterBar ({navigation}) {
+  return (
+    <View style={styles.footer}>
+      <View style={styles.footerContent}>
+        {/* Items 1 */}
+        <TouchableOpacity onPress={() => navigation.navigate('Home')} activeOpacity={0.6}>
           <View style={styles.footerItems}>
             <Image source={Home} style={styles.footerIcons} />
-            <Text style={styles.footerText}>
-              home
-            </Text>
           </View>
-          {/* Items 2 */}
-          <View style={styles.footerItems}>
+        </TouchableOpacity>
+        {/* Items 2 */}
+        <TouchableOpacity onPress={() => navigation.navigate('Chat')} activeOpacity={0.9}>
+        <View style={styles.footerItems}>
             <View style={styles.footerCircle}>
-            <Image source={chat} style={styles.footerIcons} />
-            <Text style={styles.footerText}>
-              chat
-            </Text>
+              <Image source={chat} style={styles.footerIcons} />
+              <Text style={styles.footerText}>
+                chat
+              </Text>
             </View>
-          </View>
-          {/* Items 3 */}
-          <View style={styles.footerItems}>
-            <Image source={account} style={styles.footerIcons} />
-            <Text style={styles.footerText}>
-              home
-            </Text>
-          </View>
         </View>
-      </View>
-    )
-  }
+        </TouchableOpacity>
+        {/* Items 3 */}
+        <TouchableOpacity onPress={() => navigation.navigate('Account')} activeOpacity={0.6}>
+         <View style={styles.footerItems}>
+            <Image source={account} style={styles.footerIcons} />
 
-  export default withNavigation(FooterBar);
+         </View>
+        </TouchableOpacity>
+      </View>
+    </View>
+  )
+}
+
+export default withNavigation(FooterBar)

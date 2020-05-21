@@ -10,6 +10,7 @@ const styles = StyleSheet.create({
    mainView:{
      height: 200,
      marginHorizontal: 20,
+     marginVertical: 20,
      backgroundColor: '#fff',
      justifyContent: 'center',
      alignItems: 'center',
