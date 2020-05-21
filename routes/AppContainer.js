@@ -8,16 +8,16 @@ import HomeScreen from '../Screens/HomeScreen'
 //import the header
 import NavBar from '../Components/NavBar'
 const screens = {
-  Home: {
-    screen: HomeScreen,
-    navigationOptions: {
-      header: ()=> <NavBar/> ,
-    }
-  },
   Login: {
     screen: LoginScreen,
     navigationOptions: {
       headerShown: false,
+    }
+  },
+  Home: {
+    screen: HomeScreen,
+    navigationOptions: {
+      header: ()=> <NavBar/> ,
     }
   },
 }

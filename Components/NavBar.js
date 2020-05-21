@@ -17,6 +17,17 @@ const styles = StyleSheet.create({
   MenuImg:{
     width:27,
     height:27,
+  },
+  container:{
+    shadowColor: "#000",
+shadowOffset: {
+	width: 0,
+	height: 2,
+},
+shadowOpacity: 0.25,
+shadowRadius: 3.84,
+
+elevation: 5,
   }
 })
 
@@ -24,13 +35,12 @@ const styles = StyleSheet.create({
 class Navbar extends Component {
   render() {
     return (
-      <Header 
+        <Header 
+          containerStyle={styles.container}
           backgroundColor={'#fff'}
           leftComponent={<Image source={logo} style={styles.LogoImg} />}
           rightComponent={<Image source={menu} style={styles.MenuImg} />}
       />
-
-
     );
   }
 }
