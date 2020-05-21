@@ -1,14 +1,11 @@
 // import
 import React from 'react'
 import { View, StyleSheet, Image, Text } from 'react-native'
-import { Container} from 'native-base'
-// import the images
-import MarkAtt from '../Components/MarkAtt';
-import LeaveMang from '../Components/LeaveMang';
-//import images
-import Home from '../assets/Home.png';
-import account from '../assets/account.png';
-import chat from '../assets/chat.png'
+import { Container } from 'native-base'
+// import
+import FooterBar from '../Components/FooterBar'
+import MarkAtt from '../Components/MarkAtt'
+import LeaveMang from '../Components/LeaveMang'
 
 // stylesheet
 const styles = StyleSheet.create({
@@ -28,7 +25,7 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
     bottom: 0,
-    paddingHorizontal: 15
+    paddingHorizontal: 25
   },
   footerContent: {
     height: 60,
@@ -36,16 +33,40 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center'
   },
-  footerItems:{
-    //justifyContent: 'center',
-    //alignSelf: 'center',
-    alignContent: 'center',
-    //alignItems: 'center',
-    //textAlign: 'center'
+  footerItems: {
+    alignItems: 'center'
   },
-  footerIcons:{
-    width: 25,
-    height: 25,
+  footerIcons: {
+    width: 20,
+    height: 20
+  },
+  footerText: {
+    fontSize: 13,
+    fontWeight: 'bold',
+    color: '#5c95ac',
+    textTransform: 'uppercase'
+  },
+  footerTextInactive: {
+    fontSize: 13,
+    fontWeight: 'bold',
+    color: '#5c95ac',
+    textTransform: 'uppercase'
+  },
+  footerCircle:{
+   backgroundColor: '#fff',
+   width: 85,
+   height: 85,
+   borderRadius: 85/2,
+   justifyContent: 'center',
+   alignItems: "center",
+   shadowColor: "#000",
+   shadowOffset: {
+    	width: 0,
+    	height: 12,
+   },
+   shadowOpacity: 0.58,
+   shadowRadius: 16.00,
+   elevation: 24,
   }
 
 })
@@ -60,31 +81,7 @@ function HomeScreen () {
       </View>
       <MarkAtt/>
       <LeaveMang/>
-      
-      {/* footer */}
-      <View style={styles.footer}>
-        <View style={styles.footerContent}>
-          {/* Items 1 */}
-          <View styles={styles.footerItems}>
-            <Image source={Home} style={styles.footerIcons} />
-            <Text>
-              footer 1
-            </Text>
-          </View>
-          {/* Items 2 */}
-          <View>
-            <Text>
-              footer 2
-            </Text>
-          </View>
-          {/* Items 3 */}
-          <View>
-            <Text>
-              footer 3
-            </Text>
-          </View>
-        </View>
-      </View>
+      <FooterBar />
     </Container>
   )
 }
