@@ -18,6 +18,7 @@ const screens = {
       header: ()=> <NavBar/> ,
     }
   },
+
   Login: {
     screen: LoginScreen,
     navigationOptions: {

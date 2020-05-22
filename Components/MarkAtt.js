@@ -44,7 +44,7 @@ class MarkAtt extends Component {
     return (
           <View style={styles.mainView}>
             <Image source={entrepreneurs} style={styles.imgView} />
-           <Text style={styles.titleView} >Mark Attendance</Text>
+            <Text style={styles.titleView} >Mark Attendance</Text>
           </View>
 
 
