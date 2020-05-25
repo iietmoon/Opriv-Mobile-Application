@@ -1,6 +1,6 @@
 // import
 import React, {Component} from 'react'
-import { View, StyleSheet, Image, Text, TouchableHighlight } from 'react-native'
+import { View, StyleSheet, Image, Text, Alert } from 'react-native'
 import { LinearGradient } from 'expo-linear-gradient';
 import { Input, Button, SocialIcon } from 'react-native-elements';
 import { withNavigation } from 'react-navigation';
@@ -55,22 +55,11 @@ const styles = StyleSheet.create({
       backgroundColor: '#00baff',
       borderRadius: 5,
   },
-  socialView:{
-      marginTop: 50,
-      flexDirection: 'row',
-      justifyContent: 'center'
-  },
-  socialIcon:{
-    width: 45,
-    height: 45,
-    marginHorizontal: 7,
-  },
   upBox:{
-    marginTop: 15,
-    alignItems: 'center',
+    marginTop: 35,
+    paddingHorizontal: 20,
   },
   upBtn:{
-    width: 200,
     backgroundColor: 'transparent',
     borderRadius: 5,
     borderWidth:2,
@@ -81,6 +70,18 @@ const styles = StyleSheet.create({
 
 // the login screen
 function LoginScreen({navigation}) {
+
+  const loginAlert = ()=> Alert.alert(
+    'The Signin Backend not working right now',
+    'please contact the developer or sign in with google account',
+    [
+      {
+        text: 'Close',
+        onPress: () => console.log('Thank You!')
+      }
+    ],
+    { cancelable: false }
+  ) ;
     return (
       <View>
       <LinearGradient colors={['#7fceee', '#406a79']} style={{height: 1000}}>
@@ -102,22 +103,21 @@ function LoginScreen({navigation}) {
 
           {/*Login button*/}
           <View style={styles.boxBtn} >
-            <Button title="Sign in" buttonStyle={styles.Btn} onPress={() => navigation.navigate('Home') } />
+            <Button title="Sign in" buttonStyle={styles.Btn} onPress={loginAlert} />
           </View> 
-        </View>
-        <View style={styles.socialView} >
-          <Image source={fbLogo} style={styles.socialIcon} />
-          <Image source={twLogo} style={styles.socialIcon} /> 
-        </View>
+          </View>
 
-        {/*Signup button*/}
-        <View style={styles.upBox} >
-           <Button title="Sign up" buttonStyle={styles.upBtn}/>
-        </View> 
+          {/* login with google */}
+          <View style={styles.upBox} >
+            <SocialIcon title='Login with google' button type='google'  />
+             {/*Signup button*/}
+             <SocialIcon title='Create New Account' button  />
+          </View>
         
       </LinearGradient>
     </View>
     );
   }
 
+//export of screen
 export default withNavigation(LoginScreen);

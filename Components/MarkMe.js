@@ -1,7 +1,7 @@
 // import libraries
 import React, { state, useState } from 'react'
-import { Container } from 'native-base'
-import { View, StyleSheet, Image, Text, Dimensions, Alert } from 'react-native'
+import { Container, } from 'native-base'
+import { View, StyleSheet, Image, Text, Modal, Dimensions, Alert } from 'react-native'
 // import footer
 import FooterBar from '../Components/FooterBar'
 // import the images
@@ -10,7 +10,7 @@ import Leave from '../assets/reminder_note.png'
 import { TouchableHighlight, TouchableOpacity } from 'react-native-gesture-handler'
 
 // stylesheet
-const screen = Dimensions.get('screen')
+const screen = Dimensions.get("screen");
 const styles = StyleSheet.create({
   TitleView: {
     alignItems: 'center',
@@ -52,7 +52,7 @@ const styles = StyleSheet.create({
     paddingTop: -15,
     color: '#00246e'
   },
-  modal: {
+  modal:{
     justifyContent: 'center',
     alignItems: 'center',
     height: screen.height,
@@ -66,49 +66,29 @@ const styles = StyleSheet.create({
     height: 230,
     backgroundColor: '#fff',
     borderRadius: 5,
-    shadowColor: '#000',
+    shadowColor: "#000",
     shadowOffset: {
-      width: 0,
-      height: 12
+    	width: 0,
+    	height: 12,
     },
     shadowOpacity: 0.58,
     shadowRadius: 16.00,
-    elevation: 24
+    elevation: 24,
   },
-  modalText: {
+  modalText:{
     fontSize: 25,
     fontWeight: 'bold'
   },
-  modalP: {
-    fontSize: 16
+  modalP:{
+    fontSize: 16,
   }
 })
 
 // start of the function
-function AttendanceScreen () {
-  const PresentAlert = () => Alert.alert(
-    'Thanks You!',
-    'Your Presentation has been marked',
-    [
-      {
-        text: 'Close',
-        onPress: () => console.log('Thank You!')
-      }
-    ],
-    { cancelable: false }
-  )
-  const LeaveAlert = () => Alert.alert(
-    'My Timline!',
-    'Your Must be present in your desk \n Moday To Friday : \n 9AM-12:30PM & 2PM-5PM \n Saturday :\n 9AM-1PM \n Sunday :\n Off ',
-    [
-      {
-        text: 'Close',
-        onPress: () => console.log('Thank You!')
-      }
-    ],
-    { cancelable: false }
-  )
+function MarkMe() {
+  
   // function of The Popup
+  const [modalVisible, setModalVisible] = useState(false);
   return (
     <Container>
       <TouchableHighlight>
@@ -118,28 +98,42 @@ function AttendanceScreen () {
           </Text>
         </View>
       </TouchableHighlight>
-      <TouchableOpacity onPress={PresentAlert} activeOpacity={0.9}>
+      <TouchableOpacity onPress={() => {setModalVisible(!modalVisible)}} activeOpacity={0.9}>
         <View style={styles.mainView}>
-          <Image source={Leave} style={styles.imgView} />
+          <Image source={Present} style={styles.imgView} />
           <Text style={styles.titleView}>
             Mark Me Present
           </Text>
         </View>
       </TouchableOpacity>
-
-      {/* Submit Leave*/}
-      <TouchableOpacity onPress={LeaveAlert} activeOpacity={0.9}>
-        <View style={styles.mainView}>
-          <Image source={Present} style={styles.imgView} />
-          <Text style={styles.titleView}>
-            My Timeline
-          </Text>
+      <View style={styles.mainView}>
+        <Image source={Leave} style={styles.imgView} />
+        <Text style={styles.titleView}>
+          Submit Leave
+        </Text>
+      </View> 
+      <Modal
+        animationType='slide'
+        transparent={true}
+        visible={modalVisible}
+        onRequestClose={() => {
+                          setModalVisible(!modalVisible);
+                        }}>
+        <View style={styles.modal}>
+          <View style={styles.modalView}>
+            <Text style={styles.modalText}>
+              Thank You!
+            </Text>
+            <Text style={styles.modalP}>
+              Your attendance has been marked
+            </Text>
+          </View>
         </View>
-      </TouchableOpacity>
+      </Modal>
       <FooterBar />
     </Container>
   )
 }
 
 // export the  component
-export default AttendanceScreen
+export default MarkMe;

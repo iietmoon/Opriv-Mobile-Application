@@ -4,9 +4,6 @@ import { View, StyleSheet, Image, Text } from 'react-native'
 import { Container } from 'native-base'
 // import
 import FooterBar from '../Components/FooterBar'
-import MarkAtt from '../Components/MarkAtt'
-import LeaveMang from '../Components/LeaveMang'
-
 // stylesheet
 const styles = StyleSheet.create({
   TitleView: {

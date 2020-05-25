@@ -1,6 +1,6 @@
 // import
 import React from 'react'
-import { View, StyleSheet, Image, Text, TouchableOpacity } from 'react-native'
+import { View, StyleSheet, Image, Text, TouchableOpacity, Alert } from 'react-native'
 import { Container } from 'native-base';
 import {withNavigation} from 'react-navigation'
 // import
@@ -44,7 +44,7 @@ const styles = StyleSheet.create({
     height:150
   },
   titleView:{
-    fontSize:32,
+    fontSize:30,
     fontWeight: 'bold',
     paddingTop: -15,
     color: '#00246e'
@@ -52,30 +52,39 @@ const styles = StyleSheet.create({
 
 })
 
-function HomeScreen({navigation}) {
+function LeaveScreen({navigation}) {
+  const LeaveAlert = () => Alert.alert(
+    'Thanks You!',
+    'Your Leave request has been marked',
+    [
+      {
+        text: 'Close',
+        onPress: () => console.log('Thank You!')
+      }
+    ],
+    { cancelable: false }
+  )
   return (
     <Container>
 
-    {/* Mark Attendance */}
-
+     {/* Title */}
       <View style={styles.TitleView}>
-        <Text style={styles.Title}>Opriv Technologies</Text>
-        <Text style={styles.Title}>HR Management Service</Text>
+        <Text style={styles.Title}>Leave Management</Text>
       </View>
       
-      {/* Mark Attendance */}
-      <TouchableOpacity activeOpacity={0.9} onPress={()=> navigation.navigate('Attendance') }>
+      {/* Submit */}
+      <TouchableOpacity activeOpacity={0.9} onPress={LeaveAlert}>
        <View style={styles.mainView}>
             <Image source={entrepreneurs} style={styles.imgView} />
-            <Text style={styles.titleView} >Mark Attendance</Text>
+            <Text style={styles.titleView} >Submit Leave</Text>
       </View>
       </TouchableOpacity>
 
       {/* Leave Management */}
-      <TouchableOpacity activeOpacity={0.9} onPress={()=> navigation.navigate('Leave')}>
+      <TouchableOpacity activeOpacity={0.9}>
        <View style={styles.mainView}>
             <Image source={noteTaking} style={styles.imgView} />
-            <Text style={styles.titleView} >Leave Management</Text>
+            <Text style={styles.titleView} >Previous Leaves</Text>
       </View>
       </TouchableOpacity>
 
@@ -85,4 +94,4 @@ function HomeScreen({navigation}) {
   )
 }
 
-export default withNavigation(HomeScreen);
+export default withNavigation(LeaveScreen);

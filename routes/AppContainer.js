@@ -7,24 +7,14 @@ import LoginScreen from '../Screens/loginScreen';
 import HomeScreen from '../Screens/HomeScreen';
 import ChatScreen from '../Screens/ChatScreen';
 import AccountScreen from '../Screens/AccountScreen';
-import AttendanceScreen from '../Screens/AttendanceScreen'
+import AttendanceScreen from '../Screens/AttendanceScreen';
+import LeaveScreen from '../Screens/LeaveScreen'
 
 //import the header
-import NavBar from '../Components/NavBar'
-const screens = {
-  Attendance: {
-    screen: AttendanceScreen,
-    navigationOptions: {
-      header: ()=> <NavBar/> ,
-    }
-  },
+import NavBar from '../Components/NavBar';
 
-  Login: {
-    screen: LoginScreen,
-    navigationOptions: {
-      headerShown: false,
-    }
-  },
+// screens ID
+const screens = {
   Home: {
     screen: HomeScreen,
     navigationOptions: {
@@ -43,12 +33,25 @@ const screens = {
       header: ()=> <NavBar/> ,
     }
   },
+  Attendance: {
+    screen: AttendanceScreen,
+    navigationOptions: {
+      header: ()=> <NavBar/> ,
+    }
+  },
+  Leave: {
+    screen: LeaveScreen,
+    navigationOptions: {
+      header: ()=> <NavBar/> ,
+    }
+  },
+
 
 }
 
 
 
-
+// export the navigation
 const AppNavigator = createStackNavigator(screens);
 
-export default createAppContainer(AppNavigator);
+export default AppNavigator;
