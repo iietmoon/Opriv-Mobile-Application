@@ -1,29 +1,41 @@
 //import dependencies
-import React from 'react';
-import {createSwitchNavigator, createAppContainer} from 'react-navigation'
-import * as firebase from 'firebase';
+import React, { Component } from 'react';
 //import the config of firebase
 import firebaseConfig from './Config/firbase'
 //import screens
 import Navigator from './routes/AppContainer';
 import loginScreen from './Screens/loginScreen';
-import LoadingScreen from './Screens/LoadingScreen';
+import fire from './Config/firbase';
 
-//firebase initialize
-firebase.initializeApp(firebaseConfig)
+//the App View
+class App extends Component{
 
-//export the App View
-export default function App() {
-  return (
-      <Application/>
-  );
+  constructor(props){
+    super(props);
+    this.state = {
+      user:{}
+    }
+  }
+
+  componentDidUpdate(){
+    this.autListiner();
+  }
+
+  autListiner(){
+    fire.auth().onAuthStateChanged((user) => {
+      if(user){ 
+        this.setState({user});
+      }else{
+        this.setState({user: null})
+      }
+    });
+  }
+
+  render(){
+    return(
+      { this.state.user ? (<Navigator/> : <loginScreen/> )}
+    )
+  }
 }
 
-//
-const AppView = createSwitchNavigator({
-  Loading: LoadingScreen, 
-  login: loginScreen,
-  appView: Navigator,
-})
-
-const Application = createAppContainer(AppView);
+export default App;

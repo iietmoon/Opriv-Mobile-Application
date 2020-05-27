@@ -54,4 +54,4 @@ const screens = {
 // export the navigation
 const AppNavigator = createStackNavigator(screens);
 
-export default AppNavigator;
+export default createAppContainer(AppNavigator);
