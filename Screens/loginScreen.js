@@ -1,123 +1,156 @@
 // import
-import React, {Component} from 'react'
+import React, { Component } from 'react'
 import { View, StyleSheet, Image, Text, Alert } from 'react-native'
-import { LinearGradient } from 'expo-linear-gradient';
-import { Input, Button, SocialIcon } from 'react-native-elements';
+import { LinearGradient } from 'expo-linear-gradient'
+import { Input, Button, SocialIcon } from 'react-native-elements'
 import { withNavigation } from 'react-navigation';
+import LoadingScreen from '../Screens/LoadingScreen'
 // import the images
 import logo from '../assets/logo.png';
-import fbLogo from '../assets/fb-logo.png';
-import twLogo from '../assets/twitter-logo.png';
+import * as firebase from 'firebase';
 
 // stylesheet
 const styles = StyleSheet.create({
-  lgView:{
-      height:250,
-      alignItems: 'center',
-      paddingTop:  80
+  lgView: {
+    height: 250,
+    alignItems: 'center',
+    paddingTop: 80
   },
   logo: {
     width: 150,
     height: 150
   },
-  boxView:{
-      backgroundColor: '#fff',
-      marginHorizontal: 20,
-      marginTop: 30,
-      borderRadius:10,
-      paddingVertical: 25,
-      paddingHorizontal: 15
+  boxView: {
+    backgroundColor: '#fff',
+    marginHorizontal: 20,
+    marginTop: 30,
+    borderRadius: 10,
+    paddingVertical: 25,
+    paddingHorizontal: 15
   },
-  BoxTitle:{
-      alignItems: 'center',
+  BoxTitle: {
+    alignItems: 'center'
   },
-  Title:{
+  Title: {
     color: '#000',
     fontSize: 22,
-    fontWeight: "bold"
+    fontWeight: 'bold'
   },
-  input:{
-      borderBottomColor: '#000',
-      fontSize:15,
+  input: {
+    borderBottomColor: '#000',
+    fontSize: 15
   },
-  forgot:{
+  forgot: {
     color: '#00baff',
     fontSize: 15,
-    fontWeight: "normal"
+    fontWeight: 'normal'
   },
-  boxBtn:{
+  boxBtn: {
     marginTop: 25,
     marginBottom: -45,
-    alignItems: 'center',
+    alignItems: 'center'
   },
-  Btn:{
-      width: 150,
-      backgroundColor: '#00baff',
-      borderRadius: 5,
+  Btn: {
+    width: 150,
+    backgroundColor: '#00baff',
+    borderRadius: 5
   },
-  upBox:{
+  upBox: {
     marginTop: 35,
-    paddingHorizontal: 20,
+    paddingHorizontal: 20
   },
-  upBtn:{
+  upBtn: {
     backgroundColor: 'transparent',
     borderRadius: 5,
-    borderWidth:2,
+    borderWidth: 2,
     borderColor: '#FFF'
   }
 
 })
 
 // the login screen
-function LoginScreen({navigation}) {
 
-  const loginAlert = ()=> Alert.alert(
-    'The Signin Backend not working right now',
-    'please contact the developer or sign in with google account',
-    [
-      {
-        text: 'Close',
-        onPress: () => console.log('Thank You!')
-      }
-    ],
-    { cancelable: false }
-  ) ;
-    return (
-      <View>
-      <LinearGradient colors={['#7fceee', '#406a79']} style={{height: 1000}}>
-        <View style={styles.lgView}>
-          <Image source={logo} style={styles.logo} />
-        </View>
-        <View style={styles.boxView}>
-
-          <View style={styles.BoxTitle} >
-              <Text style={styles.Title} >Sign in</Text>
-          </View>
-          <View>
-            <Input placeholder='Email' inputStyle={styles.input} />
-            <Input placeholder="Password" secureTextEntry={true} inputStyle={styles.input}/>
-          </View>
-          <View style={styles.BoxTitle} >
-              <Text style={styles.forgot} >Forgot Password?</Text>
-          </View>
-
-          {/*Login button*/}
-          <View style={styles.boxBtn} >
-            <Button title="Sign in" buttonStyle={styles.Btn} onPress={loginAlert} />
-          </View> 
-          </View>
-
-          {/* login with google */}
-          <View style={styles.upBox} >
-            <SocialIcon title='Login with google' button type='google'  />
-             {/*Signup button*/}
-             <SocialIcon title='Create New Account' button  />
-          </View>
-        
-      </LinearGradient>
-    </View>
-    );
+class LoginScreen extends Component {
+  constructor(props){
+    super(props);
+    this.state = {
+      email:'',
+      password:'',
+      error:'',
+      loading: null
+    }
+  }
+  onLogin(){
+    this.state({
+      error:'',
+      loading: true
+    });
+  const{email, password} = this.state;
+  firebase.auth().signInWithEmailAndPassword(email, password)
+  .then( ()=> {
+    this.state({error:'', loading: false});
+    this.props.navigation('Home')
+  })
+  .catch(()=>{
+    this.state({error:'Aut is failed', loading: false});
+  })
+  }
+  checkLoading(){
+    if(this.state.loading){
+      return <LoadingScreen />
+    }return <View style={styles.boxBtn}>
+              <Button title='Sign in' buttonStyle={styles.Btn} onPress={loginAlert} />
+           </View>
   }
 
-//export of screen
-export default withNavigation(LoginScreen);
+
+  render () {
+    const loginAlert = () => Alert.alert(
+      'The Signin Backend not working right now',
+      'please contact the developer or sign in with google account',
+      [
+        {
+          text: 'Close',
+          onPress: () => console.log('Thank You!')
+        }
+      ],
+      { cancelable: false }
+    )
+    return (
+      <View>
+        <LinearGradient colors={['#7fceee', '#406a79']} style={{height: 1000}}>
+          <View style={styles.lgView}>
+            <Image source={logo} style={styles.logo} />
+          </View>
+          <View style={styles.boxView}>
+            <View style={styles.BoxTitle}>
+              <Text style={styles.Title}>
+                Sign in
+              </Text>
+            </View>
+            <View>
+              <Input placeholder='Email' inputStyle={styles.input} onChangeText={email => this.state({ email}) } />
+              <Input placeholder='Password' secureTextEntry={true} inputStyle={styles.input} onChangeText={password => this.state({ password}) } />
+            </View>
+            <View style={styles.BoxTitle}>
+              <Text style={styles.forgot}>
+                Forgot Password?
+              </Text>
+            </View>
+            {/*Login button*/}
+             {this.checkLoading}
+            </View>
+          {/* login with google */}
+          <View style={styles.upBox}>
+            <SocialIcon title='Login with google' button type='google' />
+            {/*Signup button*/}
+            <SocialIcon title='Create New Account' button />
+          </View>
+        </LinearGradient>
+      </View>
+
+    )
+  }
+}
+
+export default LoginScreen

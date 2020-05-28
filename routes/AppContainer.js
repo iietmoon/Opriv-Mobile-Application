@@ -15,6 +15,12 @@ import NavBar from '../Components/NavBar';
 
 // screens ID
 const screens = {
+  Login: {
+    screen: LoginScreen,
+    navigationOptions: {
+      header: null ,
+    }
+  },
   Home: {
     screen: HomeScreen,
     navigationOptions: {
