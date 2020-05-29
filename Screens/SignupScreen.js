@@ -8,7 +8,6 @@ import LoadingScreen from '../Screens/LoadingScreen'
 // import the images
 import logo from '../assets/logo.png'
 import * as firebase from 'firebase'
-import { TouchableOpacity } from 'react-native-gesture-handler'
 
 // stylesheet
 const styles = StyleSheet.create({
@@ -69,35 +68,9 @@ const styles = StyleSheet.create({
 
 })
 
-// Your web app's Firebase configuration
 // the login screen
 
-class LoginScreen extends Component {
-  constructor (props) {
-    super(props)
-    this.state = {
-      email: '',
-      password: '',
-      error: '',
-      loading: null
-    }
-  }
-  onLogin () {
-    this.state({
-      error: '',
-      loading: true
-    })
-    const {email, password} = this.state
-    firebase.auth().signInWithEmailAndPassword(email, password)
-      .then(() => {
-        this.state({error: '', loading: false})
-        this.props.navigation('Home')
-      })
-      .catch(() => {
-        this.state({error: 'Aut is failed', loading: false})
-      })
-  }
-
+class SignupScreen extends Component {
   render () {
     const loginAlert = () => Alert.alert(
       'The Signin Backend not working right now',
@@ -145,9 +118,7 @@ class LoginScreen extends Component {
           <View style={styles.upBox}>
             <SocialIcon title='Login with google' button type='google' />
             {/*Signup button*/}
-            <TouchableOpacity onPress={navigation.navigate('SignupScreen')} >
-              <SocialIcon title='Create New Account' button />
-            </TouchableOpacity>
+            <SocialIcon title='Create New Account' button />
           </View>
         </LinearGradient>
       </View>
@@ -156,4 +127,4 @@ class LoginScreen extends Component {
   }
 }
 
-export default withNavigation(LoginScreen);
+export default SignupScreen;

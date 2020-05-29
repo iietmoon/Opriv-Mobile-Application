@@ -1,7 +1,7 @@
 import firebase, { initializeApp } from 'firebase'
 
 // Your web app's Firebase configuration
-export const config = {
+export const firebaseConfig = {
     apiKey: "AIzaSyBTOyMzw8fU4024Y7hJ9yfZzsCWIyaP47E",
     authDomain: "opriv-tester.firebaseapp.com",
     databaseURL: "https://opriv-tester.firebaseio.com",
@@ -11,6 +11,6 @@ export const config = {
     appId: "1:221916064429:web:abd2d6087bbfa45c8f7424"
   };
 //init the config
-const fire = initializeApp(config);
+firebase.initializeApp(firebaseConfig);
 //export the config
-export default fire;
+export default firebase;

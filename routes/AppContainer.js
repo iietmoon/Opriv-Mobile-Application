@@ -8,7 +8,8 @@ import HomeScreen from '../Screens/HomeScreen';
 import ChatScreen from '../Screens/ChatScreen';
 import AccountScreen from '../Screens/AccountScreen';
 import AttendanceScreen from '../Screens/AttendanceScreen';
-import LeaveScreen from '../Screens/LeaveScreen'
+import LeaveScreen from '../Screens/LeaveScreen';
+import SignupScreen from '../Screens/SignupScreen';
 
 //import the header
 import NavBar from '../Components/NavBar';
@@ -18,7 +19,13 @@ const screens = {
   Login: {
     screen: LoginScreen,
     navigationOptions: {
-      header: null ,
+      headerShown: false ,
+    }
+  },
+  Signup: {
+    screen: SignupScreen,
+    navigationOptions: {
+      headerShown: false ,
     }
   },
   Home: {
