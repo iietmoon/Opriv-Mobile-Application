@@ -1,15 +1,14 @@
 // import
 import React, { Component } from 'react'
-import { View, StyleSheet, Image, Text, Alert } from 'react-native'
-import { LinearGradient } from 'expo-linear-gradient'
-import { Input, Button, SocialIcon } from 'react-native-elements'
+import { View, StyleSheet, Image, Text, Alert, ActivityIndicator } from 'react-native'
+import { LinearGradient } from 'expo-linear-gradient';
+import { Input, SocialIcon, Button } from 'react-native-elements';
 import { withNavigation } from 'react-navigation'
-import LoadingScreen from '../Screens/LoadingScreen'
 // import the images
-import logo from '../assets/logo.png'
-import * as firebase from 'firebase'
-import { TouchableOpacity } from 'react-native-gesture-handler'
-
+import logo from '../assets/logo.png';
+//firbease
+import firebase from '../Config/firebase';
+import 'firebase/auth';
 // stylesheet
 const styles = StyleSheet.create({
   lgView: {
@@ -65,6 +64,17 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     borderWidth: 2,
     borderColor: '#FFF'
+  },
+  newAccoutBtn: {
+    marginVertical:15,
+    height: 50,
+    borderRadius: 50,
+    backgroundColor: '#00baff',
+  },
+  ggBtn: {
+    height: 50,
+    borderRadius: 50,
+    backgroundColor: '#DB4437',
   }
 
 })
@@ -73,29 +83,41 @@ const styles = StyleSheet.create({
 // the login screen
 
 class LoginScreen extends Component {
-  constructor (props) {
-    super(props)
-    this.state = {
-      email: '',
+  constructor() {
+    super();
+    this.state = { 
+      email: '', 
       password: '',
-      error: '',
-      loading: null
+      isLoading: false
     }
   }
-  onLogin () {
-    this.state({
-      error: '',
-      loading: true
-    })
-    const {email, password} = this.state
-    firebase.auth().signInWithEmailAndPassword(email, password)
-      .then(() => {
-        this.state({error: '', loading: false})
-        this.props.navigation('Home')
+  updateInputVal = (val, prop) => {
+    const state = this.state;
+    state[prop] = val;
+    this.setState(state);
+  }
+  userLogin = () => {
+    if(this.state.email === '' && this.state.password === '') {
+      Alert.alert('Enter details to signin!')
+    } else {
+      this.setState({
+        isLoading: true,
       })
-      .catch(() => {
-        this.state({error: 'Aut is failed', loading: false})
+      firebase
+      .auth()
+      .signInWithEmailAndPassword(this.state.email, this.state.password)
+      .then((res) => {
+        console.log(res)
+        console.log('User logged-in successfully!')
+        this.setState({
+          isLoading: false,
+          email: '', 
+          password: ''
+        })
+        this.props.navigation.navigate('Home')
       })
+      .catch(error => this.setState({ errorMessage: error.message }))
+    }
   }
 
   render () {
@@ -111,6 +133,13 @@ class LoginScreen extends Component {
       { cancelable: false }
     )
     const navigation = this.props.navigation;
+    if(this.state.isLoading){
+      return(
+        <View style={styles.preloader}>
+          <ActivityIndicator size="large" color="#9E9E9E"/>
+        </View>
+      )
+    }    
     return (
       <View>
         <LinearGradient colors={['#7fceee', '#406a79']} style={{height: 1000}}>
@@ -124,12 +153,18 @@ class LoginScreen extends Component {
               </Text>
             </View>
             <View>
-              <Input placeholder='Email' inputStyle={styles.input} onChangeText={email => this.state({ email})} />
+              <Input 
+                placeholder='Email' 
+                inputStyle={styles.input} 
+                value={this.state.email}
+                onChangeText={(val) => this.updateInputVal(val, 'email')}
+                 />
               <Input
                 placeholder='Password'
                 secureTextEntry={true}
                 inputStyle={styles.input}
-                onChangeText={password => this.state({ password})} />
+                value={this.state.password}
+                onChangeText={(val) => this.updateInputVal(val, 'password')} />
             </View>
             <View style={styles.BoxTitle}>
               <Text style={styles.forgot}>
@@ -138,16 +173,19 @@ class LoginScreen extends Component {
             </View>
             {/*Login button*/}
             <View style={styles.boxBtn}>
-              <Button title='Sign in' buttonStyle={styles.Btn} onPress={loginAlert} />
+              <Button 
+              title='Sign in' 
+              buttonStyle={styles.Btn} 
+              onPress={() => this.userLogin()} />
             </View>
           </View>
           {/* login with google */}
           <View style={styles.upBox}>
-            <SocialIcon title='Login with google' button type='google' />
+            <Button title={'Login with google'} onPress={loginAlert} buttonStyle={styles.ggBtn} />
             {/*Signup button*/}
-            <TouchableOpacity onPress={navigation.navigate('SignupScreen')} >
-              <SocialIcon title='Create New Account' button />
-            </TouchableOpacity>
+            
+            <Button title={'Create New Account'} onPress={()=> navigation.navigate('Signup')} buttonStyle={styles.newAccoutBtn} />
+            
           </View>
         </LinearGradient>
       </View>

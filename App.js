@@ -1,7 +1,6 @@
 //import dependencies
 import React, { Component } from 'react';
 //import the config of firebase
-import firebaseConfig from './Config/firbase'
 //import screens
 import Navigator from './routes/AppContainer';
 import LoginScreen from './Screens/loginScreen';

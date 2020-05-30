@@ -1,14 +1,13 @@
 // import
 import React, { Component } from 'react'
-import { View, StyleSheet, Image, Text, Alert } from 'react-native'
+import { View, StyleSheet, Image, Text, Alert, ActivityIndicator } from 'react-native'
 import { LinearGradient } from 'expo-linear-gradient'
 import { Input, Button, SocialIcon } from 'react-native-elements'
-import { withNavigation } from 'react-navigation'
-import LoadingScreen from '../Screens/LoadingScreen'
 // import the images
-import logo from '../assets/logo.png'
-import * as firebase from 'firebase'
-
+import logo from '../assets/logo.png';
+//firbease
+import firebase from '../Config/firebase';
+import 'firebase/auth';
 // stylesheet
 const styles = StyleSheet.create({
   lgView: {
@@ -64,6 +63,17 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     borderWidth: 2,
     borderColor: '#FFF'
+  },
+  newAccoutBtn: {
+    marginVertical:15,
+    height: 50,
+    borderRadius: 50,
+    backgroundColor: '#00baff',
+  },
+  ggBtn: {
+    height: 50,
+    borderRadius: 50,
+    backgroundColor: '#DB4437',
   }
 
 })
@@ -71,7 +81,54 @@ const styles = StyleSheet.create({
 // the login screen
 
 class SignupScreen extends Component {
+  constructor() {
+    super();
+    this.state = { 
+      displayName: '',
+      email: '', 
+      password: '',
+      isLoading: false
+    }
+  }
+
+  updateInputVal = (val, prop) => {
+    const state = this.state;
+    state[prop] = val;
+    this.setState(state);
+  }
+
+  registerUser = () => {
+    if(this.state.email === '' && this.state.password === '') {
+      Alert.alert('Enter details to signup!')
+    } else {
+      this.setState({
+        isLoading: true,
+      })
+      firebase
+      .auth()
+      .createUserWithEmailAndPassword(this.state.email, this.state.password)
+      .then((res) => {
+        res.user.updateProfile({
+          displayName: this.state.displayName
+        })
+        console.log('User registered successfully!')
+        this.setState({
+          isLoading: false,
+          displayName: '',
+          email: '', 
+          password: ''
+        })
+        this.props.navigation.navigate('Login')
+      })
+      .catch(error => this.setState({ errorMessage: error.message }))      
+    }
+  }
+
+
+
+
   render () {
+
     const loginAlert = () => Alert.alert(
       'The Signin Backend not working right now',
       'please contact the developer or sign in with google account',
@@ -83,7 +140,14 @@ class SignupScreen extends Component {
       ],
       { cancelable: false }
     )
-    const navigation = this.props.navigation;
+
+    if(this.state.isLoading){
+      return(
+        <View style={styles.preloader}>
+          <ActivityIndicator size="large" color="#9E9E9E"/>
+        </View>
+      )
+    }    
     return (
       <View>
         <LinearGradient colors={['#7fceee', '#406a79']} style={{height: 1000}}>
@@ -93,32 +157,34 @@ class SignupScreen extends Component {
           <View style={styles.boxView}>
             <View style={styles.BoxTitle}>
               <Text style={styles.Title}>
-                Sign in
+                Create new account
               </Text>
             </View>
             <View>
-              <Input placeholder='Email' inputStyle={styles.input} onChangeText={email => this.state({ email})} />
+              <Input placeholder='full-name*' 
+                     inputStyle={styles.input} 
+                     value={this.state.displayName}
+                     onChangeText={(val) => this.updateInputVal(val, 'displayName')}
+              />
               <Input
-                placeholder='Password'
-                secureTextEntry={true}
-                inputStyle={styles.input}
-                onChangeText={password => this.state({ password})} />
-            </View>
-            <View style={styles.BoxTitle}>
-              <Text style={styles.forgot}>
-                Forgot Password?
-              </Text>
+                     style={styles.inputStyle}
+                     placeholder="Email"
+                     value={this.state.email}
+                     onChangeText={(val) => this.updateInputVal(val, 'email')}
+              />
+              <Input
+                     style={styles.inputStyle}
+                     placeholder="Password"
+                     value={this.state.password}
+                     onChangeText={(val) => this.updateInputVal(val, 'password')}
+                     secureTextEntry={true}
+              />
+              
             </View>
             {/*Login button*/}
             <View style={styles.boxBtn}>
-              <Button title='Sign in' buttonStyle={styles.Btn} onPress={loginAlert} />
+              <Button title='Sign up' buttonStyle={styles.Btn} onPress={() => this.registerUser()} />
             </View>
-          </View>
-          {/* login with google */}
-          <View style={styles.upBox}>
-            <SocialIcon title='Login with google' button type='google' />
-            {/*Signup button*/}
-            <SocialIcon title='Create New Account' button />
           </View>
         </LinearGradient>
       </View>
