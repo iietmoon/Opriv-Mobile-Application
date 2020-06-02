@@ -73,7 +73,7 @@ function ChatScreen () {
     <Container>
       <View style={styles.TitleView}>
         <Text style={styles.Title}>
-          ChatScreen
+          Sorry! all users offline 
         </Text>
       </View>
       <FooterBar />

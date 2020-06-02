@@ -8,6 +8,7 @@ import FooterBar from '../Components/FooterBar'
 // import the images
 import entrepreneurs from '../assets/entrepreneurs.png';
 import noteTaking from '../assets/note-taking.png';
+import { ScrollView } from 'react-native-gesture-handler';
 
 // stylesheet
 const styles = StyleSheet.create({
@@ -57,9 +58,9 @@ function HomeScreen({navigation}) {
     <Container>
 
     {/* Mark Attendance */}
-
-      <View style={styles.TitleView}>
-        <Text style={styles.Title}>Opriv Technologies</Text>
+    <ScrollView>
+      
+    <View style={styles.TitleView}>
         <Text style={styles.Title}>HR Management Service</Text>
       </View>
       
@@ -79,6 +80,7 @@ function HomeScreen({navigation}) {
       </View>
       </TouchableOpacity>
 
+    </ScrollView>
       {/* Footer */}
       <FooterBar />
     </Container>

@@ -1,13 +1,13 @@
 // import
 import React from 'react'
-import { View, StyleSheet, Image, Text, TouchableOpacity, Alert } from 'react-native'
-import { Container } from 'native-base';
+import { View, StyleSheet, Image, Text, TouchableOpacity, Alert, ScrollView} from 'react-native'
 import {withNavigation} from 'react-navigation'
 // import
 import FooterBar from '../Components/FooterBar'
 // import the images
 import entrepreneurs from '../assets/entrepreneurs.png';
 import noteTaking from '../assets/note-taking.png';
+import { Container } from 'native-base';
 
 // stylesheet
 const styles = StyleSheet.create({
@@ -66,9 +66,9 @@ function LeaveScreen({navigation}) {
   )
   return (
     <Container>
-
-     {/* Title */}
-      <View style={styles.TitleView}>
+    <ScrollView>
+           {/* Title */}
+           <View style={styles.TitleView}>
         <Text style={styles.Title}>Leave Management</Text>
       </View>
       
@@ -88,6 +88,7 @@ function LeaveScreen({navigation}) {
       </View>
       </TouchableOpacity>
 
+    </ScrollView>
       {/* Footer */}
       <FooterBar />
     </Container>

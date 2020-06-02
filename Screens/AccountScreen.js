@@ -24,7 +24,7 @@ function AccountScreen () {
     <Container>
       <View style={styles.TitleView}>
         <Text style={styles.Title}>
-          Account Screen
+          Your account not verified 
         </Text>
       </View>
       <FooterBar />

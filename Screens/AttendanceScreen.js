@@ -7,7 +7,7 @@ import FooterBar from '../Components/FooterBar'
 // import the images
 import Present from '../assets/present.png'
 import Leave from '../assets/reminder_note.png'
-import { TouchableHighlight, TouchableOpacity } from 'react-native-gesture-handler'
+import { TouchableHighlight, TouchableOpacity, ScrollView } from 'react-native-gesture-handler'
 
 // stylesheet
 const screen = Dimensions.get('screen')
@@ -111,7 +111,8 @@ function AttendanceScreen () {
   // function of The Popup
   return (
     <Container>
-      <TouchableHighlight>
+       <ScrollView>
+       <TouchableHighlight>
         <View style={styles.TitleView}>
           <Text style={styles.Title}>
             Attendance Manager
@@ -136,7 +137,9 @@ function AttendanceScreen () {
           </Text>
         </View>
       </TouchableOpacity>
-      <FooterBar />
+
+       </ScrollView>
+       <FooterBar />
     </Container>
   )
 }

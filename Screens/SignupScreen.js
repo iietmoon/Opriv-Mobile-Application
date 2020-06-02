@@ -1,13 +1,17 @@
 // import
-import React, { Component } from 'react'
-import { View, StyleSheet, Image, Text, Alert, ActivityIndicator } from 'react-native'
-import { LinearGradient } from 'expo-linear-gradient'
-import { Input, Button, SocialIcon } from 'react-native-elements'
+import React, { Component } from 'react';
+import { View, StyleSheet, Image, Text, Alert, Dimensions } from 'react-native';
+import { LinearGradient } from 'expo-linear-gradient';
+import { Input, Button, SocialIcon } from 'react-native-elements';
+import {Spinner} from 'native-base'
 // import the images
 import logo from '../assets/logo.png';
 //firbease
 import firebase from '../Config/firebase';
 import 'firebase/auth';
+
+// Phone Height
+const winHeight = Dimensions.get('window').height;
 // stylesheet
 const styles = StyleSheet.create({
   lgView: {
@@ -143,8 +147,10 @@ class SignupScreen extends Component {
 
     if(this.state.isLoading){
       return(
-        <View style={styles.preloader}>
-          <ActivityIndicator size="large" color="#9E9E9E"/>
+        <View>
+          <LinearGradient colors={['#7fceee', '#406a79']} style={{height: winHeight, justifyContent: "center"}}>
+           <Spinner color="#fff"/>
+          </LinearGradient>
         </View>
       )
     }    
